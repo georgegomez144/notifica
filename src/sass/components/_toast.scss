@@ -1,0 +1,45 @@
+.toast-container {
+  position: fixed;
+  z-index: 1000;
+  
+  .toast {
+    opacity: 0;
+    visibility: hidden;
+    max-width: 400px;
+    min-height: 30px;
+    padding: 10px 30px;
+    margin: {
+      top: 10px;
+      bottom: 10px;
+    }
+    background-color: $toast-bkg-color;
+    color: $toast-txt-color;
+    @include border-radius(3px);
+    @include transition(all 300ms ease-in-out);
+  }
+
+  &.top {
+    top: 25px;
+  }
+  &.bottom {
+    bottom: 25px;
+  }
+
+  &.top, &.bottom {
+    &.right {
+      right: 25px;
+    }
+    &.left {
+      left: 25px;
+    }
+
+    &.right, &.left {
+      .toast {
+        &.show {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+    }
+  }
+}

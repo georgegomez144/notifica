@@ -1,0 +1,57 @@
+@mixin box-shadow($boxShadow) {
+  -webkit-box-shadow: $boxShadow;
+  -moz-box-shadow: $boxShadow;
+  -ms-box-shadow: $boxShadow;
+  -o-box-shadow: $boxShadow;
+  box-shadow: $boxShadow;
+}
+
+@mixin border-radius($borderRadius) {
+  -webkit-border-radius: $borderRadius;
+  -moz-border-radius: $borderRadius;
+  -ms-border-radius: $borderRadius;
+  -o-border-radius: $borderRadius;
+  border-radius: $borderRadius;
+}
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transform($transformations...) {
+  -webkit-transform: $transformations;
+  -moz-transform: $transformations;
+  -ms-transform: $transformations;
+  -o-transform: $transformations;
+  transform: $transformations;
+}
+
+@mixin animation($animation...) {
+  -webkit-animation: $animation;
+  -moz-animation: $animation;
+  -ms-animation: $animation;
+  -o-animation: $animation;
+  animation: $animation;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @-o-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}

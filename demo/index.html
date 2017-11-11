@@ -1,0 +1,53 @@
+<html>
+
+<head>
+  <title>Notifica</title>
+  <link rel="stylesheet" href="dist/css/my_grid.min.css">
+  <link rel="stylesheet" href="dist/css/notifica.min.css">
+</head>
+
+<body>
+  <div class="container text center">
+    <h2 class="text uppercase">Notifica</h2>
+    <divider></divider>
+    <div class="row">
+      <label for="mymessage">Type a message:</label>
+      <input id="myMessage" type="text" placeholder="Type your message...">
+      <span class="button default" onclick="toggleToastInput()">Toggle Toast: Top Right</span>
+    </div>
+    <divider></divider>
+    <span class="button default" onclick="toggleToast('toast in the top right corner','tr',3)">Toggle Toast: Top Right</span>
+    <span class="button default" onclick="toggleToast('toast in the top left corner','tl',3)">Toggle Toast: Top Left</span>
+    <span class="button default" onclick="toggleToast('toast in the bottom right corner','br',3)">Toggle Toast: Bottom Right</span>
+    <span class="button default" onclick="toggleToast('toast in the bottom left corner','bl',3)">Toggle Toast: Bottom Left</span>
+    <divider></divider>
+    <span class="button warning" onclick="toggleDismiss()">Toggle Dismissable</span>
+    <span class="button danger" onclick="toggleConfirm()">Toggle Confirm</span>
+  </div>
+  <script src="dist/js/notifica.min.js"></script>
+  <script>
+    function toggleToastInput() {
+      var inputMessage = document.getElementById('myMessage');
+      if (inputMessage.value) {
+        _N.toast(inputMessage.value, 'tr', 3);
+        inputMessage.value = '';
+      } else {
+        _N.toast('Your message cannot be blank. Please type a message to see the toast.', 'tr', 3);
+      }
+    }
+
+    function toggleToast(msg, pos, ti) {
+      _N.toast(msg, pos, ti);
+    }
+
+    function toggleDismiss() {
+      _N.dismiss('some warning message', 'bl', 3);
+    }
+
+    function toggleConfirm() {
+      _N.confirm('some warning message', 'bl', 3);
+    }
+  </script>
+</body>
+
+</html>
