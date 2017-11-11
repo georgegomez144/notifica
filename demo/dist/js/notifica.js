@@ -11,6 +11,8 @@ var _N = (function () {
             var _toast = document.createElement('div');
             var toastID = 'toast-notifica-' + new Date().getMilliseconds();
             var toastInBody;
+            var progressContainer = document.createElement('div');
+            var progressFill = document.createElement('div');
             _toast.id = toastID;
             _toast.classList.add('toast');
             _toast.dataset.location = location;
@@ -25,7 +27,8 @@ var _N = (function () {
                     break;
             }
             toastInBody = document.getElementById(toastID);
-            toastInBody.textContent = message;
+            // toastInBody.textContent = message
+            _toast.innerHTML = message + '<div class="progress-bar"><div id="' + toastID + '_progress_fill" class="fill"></div></div>';
             return toastInBody;
         }
         Toast.prototype.createContainer = function (location) {
@@ -70,10 +73,17 @@ var _N = (function () {
         }, 100);
     }
     function toastHide(toastInBody, time) {
+        var timeMilli = time * 1000;
+        var progressDelay = (timeMilli / 10 / 2);
+        var progressBar = document.getElementById(toastInBody.id + '_progress_fill');
+        progressBar.style.transitionDuration = timeMilli + 'ms';
+        setTimeout(function () {
+            progressBar.style.width = 100 + '%';
+        }, 50);
         hideToast = setTimeout(function () {
             toastInBody.classList.remove('show');
             toastRemove(toastInBody.id);
-        }, (time * 1000));
+        }, timeMilli);
     }
     function toastRemove(toastID) {
         deleteToast = setTimeout(function () {

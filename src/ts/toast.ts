@@ -14,10 +14,13 @@ let _N = (() => {
       let _toast: any = document.createElement('div')
       let toastID = 'toast-notifica-' + new Date().getMilliseconds()
       let toastInBody
-  
+      let progressContainer = document.createElement('div')
+      let progressFill = document.createElement('div')
+
       _toast.id = toastID
       _toast.classList.add('toast')
       _toast.dataset.location = location
+
       this.locArr(location)
         .map(loc => {_toast.classList.add(loc)})
       switch(this.locArr(location)[0]) {
@@ -29,7 +32,8 @@ let _N = (() => {
           break
       }
       toastInBody = document.getElementById(toastID)
-      toastInBody.textContent = message
+      // toastInBody.textContent = message
+      _toast.innerHTML = message + '<div class="progress-bar"><div id="'+toastID+'_progress_fill" class="fill"></div></div>'
       
       return toastInBody
     }
@@ -77,10 +81,17 @@ let _N = (() => {
   }
 
   function toastHide(toastInBody, time: number) {
+    let timeMilli = time * 1000
+    let progressDelay = (timeMilli/10/2)
+    let progressBar = document.getElementById(toastInBody.id+'_progress_fill')
+    progressBar.style.transitionDuration = timeMilli + 'ms'
+    setTimeout(() => {
+      progressBar.style.width = 100 + '%'
+    },50)
     hideToast = setTimeout(() => {
       toastInBody.classList.remove('show')
       toastRemove(toastInBody.id)
-    }, (time * 1000));
+    }, timeMilli);
   }
 
   function toastRemove(toastID) {

@@ -11,9 +11,24 @@
     <h2 class="text uppercase">Notifica</h2>
     <divider></divider>
     <div class="row">
-      <label for="mymessage">Type a message:</label>
-      <input id="myMessage" type="text" placeholder="Type your message...">
-      <span class="button default" onclick="toggleToastInput()">Toggle Toast: Top Right</span>
+      <div class="form-group">
+        <label for="myMessage">Type a message:</label>
+        <input id="myMessage" type="text" value="Some temporary alert text..." placeholder="Type your message...">
+      </div>
+      <div class="form-group">
+        <label for="delayHide">Time to show toast:</label>
+        <input id="delayHide" type="number" value="4" placeholder="Select a time (in seconds) to show toast...">
+      </div>
+      <div class="form-group">
+        <label for="locationSelect">Select location</label>
+        <select id="locationSelect">
+          <option value="tr" selected>Top Right</option>
+          <option value="tl">Top Left</option>
+          <option value="br">Bottom Right</option>
+          <option value="bl">Bottom Left</option>
+        </select>
+      </div>
+      <span class="button default" onclick="toggleToastInput()">Toggle Toast</span>
     </div>
     <divider></divider>
     <span class="button default" onclick="toggleToast('toast in the top right corner','tr',3)">Toggle Toast: Top Right</span>
@@ -28,9 +43,11 @@
   <script>
     function toggleToastInput() {
       var inputMessage = document.getElementById('myMessage');
+      var location = document.getElementById('locationSelect').value;
+      var delayHide = document.getElementById('delayHide').value;
       if (inputMessage.value) {
-        _N.toast(inputMessage.value, 'tr', 3);
-        inputMessage.value = '';
+        _N.toast(inputMessage.value, location, delayHide);
+        // inputMessage.value = '';
       } else {
         _N.toast('Your message cannot be blank. Please type a message to see the toast.', 'tr', 3);
       }
