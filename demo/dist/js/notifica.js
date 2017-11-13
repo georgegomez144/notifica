@@ -5,68 +5,6 @@ var _N = (function () {
     var showToast;
     var hideToast;
     var deleteToast;
-    var Toast = /** @class */ (function () {
-        function Toast(message, location) {
-            var _body = document.body;
-            var _toast = document.createElement('div');
-            var toastID = 'toast-notifica-' + new Date().getMilliseconds();
-            var toastInBody;
-            var progressContainer = document.createElement('div');
-            var progressFill = document.createElement('div');
-            _toast.id = toastID;
-            _toast.classList.add('toast');
-            _toast.dataset.location = location;
-            this.locArr(location)
-                .map(function (loc) { _toast.classList.add(loc); });
-            switch (this.locArr(location)[0]) {
-                case 'top':
-                    this.createContainer(location).append(_toast);
-                    break;
-                case 'bottom':
-                    this.createContainer(location).prepend(_toast);
-                    break;
-            }
-            toastInBody = document.getElementById(toastID);
-            // toastInBody.textContent = message
-            _toast.innerHTML = message + '<div class="progress-bar"><div id="' + toastID + '_progress_fill" class="fill"></div></div>';
-            return toastInBody;
-        }
-        Toast.prototype.createContainer = function (location) {
-            var container = document.getElementById(location);
-            if (container) {
-                return container;
-            }
-            else {
-                container = document.createElement('div');
-                container.id = location;
-                container.dataset.location = location;
-                container.classList.add('toast-container');
-                this.locArr(location)
-                    .map(function (loc) { container.classList.add(loc); });
-                document.body.appendChild(container);
-                return document.getElementById(location);
-            }
-        };
-        Toast.prototype.locArr = function (location) {
-            var locArr = [];
-            switch (location) {
-                case 'bl':
-                    locArr.push('bottom', 'left');
-                    break;
-                case 'br':
-                    locArr.push('bottom', 'right');
-                    break;
-                case 'tl':
-                    locArr.push('top', 'left');
-                    break;
-                case 'tr':
-                    locArr.push('top', 'right');
-                    break;
-            }
-            return locArr;
-        };
-        return Toast;
-    }());
     function toastShow(toastInBody, location) {
         showToast = setTimeout(function () {
             toastInBody.classList.add('show');
@@ -120,3 +58,71 @@ var _N = (function () {
         confirm: confirm
     };
 })();
+var Alert = /** @class */ (function () {
+    function Alert() {
+    }
+    Alert.prototype.show = function () {
+        console.log('show alert');
+    };
+    return Alert;
+}());
+var Toast = /** @class */ (function () {
+    function Toast(message, location) {
+        var _this = this;
+        this._locArr = [];
+        this._body = document.body;
+        this._toast = document.createElement('div');
+        this._toastID = 'toast-notifica-' + new Date().getMilliseconds();
+        this._toast.id = this._toastID;
+        this._toast.classList.add('toast');
+        this._toast.dataset.location = location;
+        this.locArr(location)
+            .map(function (loc) { _this._toast.classList.add(loc); });
+        switch (this.locArr(location)[0]) {
+            case 'top':
+                this.createContainer(location).append(this._toast);
+                break;
+            case 'bottom':
+                this.createContainer(location).prepend(this._toast);
+                break;
+        }
+        this.toastInBody = document.getElementById(this._toastID);
+        this._toast.innerHTML = message + '<div class="progress-bar"><div id="' + this._toastID + '_progress_fill" class="fill"></div></div>';
+        return this.toastInBody;
+    }
+    Toast.prototype.createContainer = function (location) {
+        var _this = this;
+        this._container = document.getElementById(location);
+        if (this._container) {
+            return this._container;
+        }
+        else {
+            this._container = document.createElement('div');
+            this._container.id = location;
+            this._container.dataset.location = location;
+            this._container.classList.add('toast-container');
+            this.locArr(location)
+                .map(function (loc) { _this._container.classList.add(loc); });
+            document.body.appendChild(this._container);
+            return document.getElementById(location);
+        }
+    };
+    Toast.prototype.locArr = function (location) {
+        switch (location) {
+            case 'bl':
+                this._locArr.push('bottom', 'left');
+                break;
+            case 'br':
+                this._locArr.push('bottom', 'right');
+                break;
+            case 'tl':
+                this._locArr.push('top', 'left');
+                break;
+            case 'tr':
+                this._locArr.push('top', 'right');
+                break;
+        }
+        return this._locArr;
+    };
+    return Toast;
+}());
