@@ -15,6 +15,9 @@ let _N = (() => {
   }
 
   function toastHide(toastInBody, time: number) {
+    if(typeof toastInBody === 'string') {
+      toastInBody = document.getElementById(toastInBody)
+    }
     let timeMilli = time * 1000
     let progressDelay = (timeMilli/10/2)
     let progressBar = document.getElementById(toastInBody.id+'_progress_fill')
@@ -61,6 +64,13 @@ let _N = (() => {
 
   function dismiss(message: string, location: string, time: number) {
     console.log('Need to build functionality') // TODO: Need to build functionality
+    location = location || 'bl'
+    time = time || 4
+
+    let toastInBody = new Toast(message, location, {dismiss:true});
+
+    toastShow(toastInBody, location)
+    toastHide(toastInBody, time)
   }
 
   function confirm(message: string, location: string, time: number) {
@@ -70,6 +80,7 @@ let _N = (() => {
   return {
     toast: toast,
     dismiss: dismiss,
-    confirm: confirm
+    confirm: confirm,
+    toastHide: toastHide
   }
 })()

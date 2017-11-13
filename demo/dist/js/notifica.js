@@ -11,6 +11,9 @@ var _N = (function () {
         }, 100);
     }
     function toastHide(toastInBody, time) {
+        if (typeof toastInBody === 'string') {
+            toastInBody = document.getElementById(toastInBody);
+        }
         var timeMilli = time * 1000;
         var progressDelay = (timeMilli / 10 / 2);
         var progressBar = document.getElementById(toastInBody.id + '_progress_fill');
@@ -48,6 +51,11 @@ var _N = (function () {
     }
     function dismiss(message, location, time) {
         console.log('Need to build functionality'); // TODO: Need to build functionality
+        location = location || 'bl';
+        time = time || 4;
+        var toastInBody = new Toast(message, location, { dismiss: true });
+        toastShow(toastInBody, location);
+        toastHide(toastInBody, time);
     }
     function confirm(message, location, time) {
         console.log('Need to build functionality'); // TODO: Need to build functionality
@@ -55,7 +63,8 @@ var _N = (function () {
     return {
         toast: toast,
         dismiss: dismiss,
-        confirm: confirm
+        confirm: confirm,
+        toastHide: toastHide
     };
 })();
 var Alert = /** @class */ (function () {
@@ -67,9 +76,12 @@ var Alert = /** @class */ (function () {
     return Alert;
 }());
 var Toast = /** @class */ (function () {
-    function Toast(message, location) {
+    function Toast(message, location, options) {
         var _this = this;
         this._locArr = [];
+        options = options || { dismiss: false };
+        var isDismiss = options.dismiss || false;
+        var dismiss = { element: '', "class": '' };
         this._body = document.body;
         this._toast = document.createElement('div');
         this._toastID = 'toast-notifica-' + new Date().getMilliseconds();
@@ -87,7 +99,11 @@ var Toast = /** @class */ (function () {
                 break;
         }
         this.toastInBody = document.getElementById(this._toastID);
-        this._toast.innerHTML = message + '<div class="progress-bar"><div id="' + this._toastID + '_progress_fill" class="fill"></div></div>';
+        if (isDismiss) {
+            dismiss.element = ' <span class="close-toast" onclick="_N.toastHide(\'' + this._toastID + '\', 0)">close</span>';
+            dismiss["class"] = ' has-close';
+        }
+        this._toast.innerHTML = '<span class="toast-message' + dismiss["class"] + '">' + message + '</span>' + dismiss.element + '<div class="progress-bar"><div id="' + this._toastID + '_progress_fill" class="fill"></div></div>';
         return this.toastInBody;
     }
     Toast.prototype.createContainer = function (location) {

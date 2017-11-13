@@ -1,3 +1,7 @@
+interface ToastOptions {
+  dismiss: boolean
+}
+
 class Toast {
   private _body
   private _toast
@@ -6,7 +10,10 @@ class Toast {
   private _locArr: Array<string> = []
   protected toastInBody
 
-  constructor(message: string, location: string) {
+  constructor(message: string, location: string, options: ToastOptions) {
+    options = options || { dismiss: false }
+    let isDismiss: boolean = options.dismiss || false
+    let dismiss: {element: string, class: string} = {element:'', class:''}
     this._body = document.body
     this._toast = document.createElement('div')
     this._toastID = 'toast-notifica-' + new Date().getMilliseconds()
@@ -26,7 +33,11 @@ class Toast {
         break
     }
     this.toastInBody = document.getElementById(this._toastID)
-    this._toast.innerHTML = message + '<div class="progress-bar"><div id="' + this._toastID + '_progress_fill" class="fill"></div></div>'
+    if (isDismiss) {
+      dismiss.element = ' <span class="close-toast" onclick="_N.toastHide(\'' + this._toastID + '\', 0)">close</span>'
+      dismiss.class = ' has-close'
+    }
+    this._toast.innerHTML = '<span class="toast-message' + dismiss.class + '">' + message + '</span>' + dismiss.element + '<div class="progress-bar"><div id="' + this._toastID + '_progress_fill" class="fill"></div></div>'
 
     return this.toastInBody
   }
