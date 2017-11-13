@@ -7,38 +7,106 @@
 </head>
 
 <body>
-  <div class="container text center">
-    <h2 class="text uppercase">Notifica</h2>
-    <divider></divider>
-    <div class="row">
-      <div class="form-group">
-        <label for="myMessage">Type a message:</label>
-        <input id="myMessage" type="text" value="Some temporary alert text..." placeholder="Type your message...">
-      </div>
-      <div class="form-group">
-        <label for="delayHide">Time to show toast:</label>
-        <input id="delayHide" type="number" value="4" placeholder="Select a time (in seconds) to show toast...">
-      </div>
-      <div class="form-group">
-        <label for="locationSelect">Select location</label>
-        <select id="locationSelect">
-          <option value="tr" selected>Top Right</option>
-          <option value="tl">Top Left</option>
-          <option value="br">Bottom Right</option>
-          <option value="bl">Bottom Left</option>
-        </select>
-      </div>
-      <span class="button default" onclick="toggleToastInput()">Toggle Toast</span>
+  <header>
+    <div class="container text center">
+      <h2 class="text uppercase">Notifica</h2>
     </div>
-    <divider></divider>
-    <span class="button default" onclick="toggleToast('toast in the top right corner','tr',3)">Toggle Toast: Top Right</span>
-    <span class="button default" onclick="toggleToast('toast in the top left corner','tl',3)">Toggle Toast: Top Left</span>
-    <span class="button default" onclick="toggleToast('toast in the bottom right corner','br',3)">Toggle Toast: Bottom Right</span>
-    <span class="button default" onclick="toggleToast('toast in the bottom left corner','bl',3)">Toggle Toast: Bottom Left</span>
-    <divider></divider>
-    <span class="button warning" onclick="toggleDismiss()">Toggle Dismissable</span>
-    <span class="button danger" onclick="toggleConfirm()">Toggle Confirm</span>
-  </div>
+  </header>
+  <divider></divider>
+  <main>
+    <div class="container text center">
+      <div class="row">
+        <div class="col-9">
+            <div class="form-group">
+              <label for="myMessage">Type a message:</label>
+              <input id="myMessage" type="text" value="Some temporary alert text..." placeholder="Type your message...">
+            </div>
+            <div class="form-group">
+              <label for="delayHide">Time to show toast:</label>
+              <input id="delayHide" type="number" value="4" placeholder="Select a time (in seconds) to show toast...">
+            </div>
+            <div class="form-group">
+              <label for="locationSelect">Select location</label>
+              <select id="locationSelect">
+                <option value="tr" selected>Top Right</option>
+                <option value="tl">Top Left</option>
+                <option value="br">Bottom Right</option>
+                <option value="bl">Bottom Left</option>
+              </select>
+            </div>
+        </div>
+        <div class="col-3">
+          <span class="button default" onclick="toggleToastInput()">Toggle Toast</span>
+        </div>
+      </div>
+      <divider></divider>
+      <div class="row">
+          <div class="col-12">
+            <h2>Standard Toasts</h2>
+          </div>
+        <div class="col-3">
+          <p>Show Toast: Top Right</p>
+          <span class="button default" onclick="showToast('toast in the top right corner','tr',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Top Left</p>
+          <span class="button default" onclick="showToast('toast in the top left corner','tl',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Bottom Right</p>
+          <span class="button default" onclick="showToast('toast in the bottom right corner','br',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Bottom Left</p>
+          <span class="button default" onclick="showToast('toast in the bottom left corner','bl',3)">Show Toast</span>
+        </div>
+      </div>
+      <divider></divider>
+      <div class="row">
+        <div class="col-12">
+          <h2>Dismissable Toasts</h2>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Top Right</p>
+          <span class="button warning" onclick="toggleDismiss('toast in the top right corner','tr',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Top Left</p>
+          <span class="button warning" onclick="toggleDismiss('toast in the top left corner','tl',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Bottom Right</p>
+          <span class="button warning" onclick="toggleDismiss('toast in the bottom right corner','br',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Bottom Left</p>
+          <span class="button warning" onclick="toggleDismiss('toast in the bottom left corner','bl',3)">Show Toast</span>
+        </div>
+      </div>
+      <divider></divider>
+      <div class="row">
+        <div class="col-12">
+          <h2>Confirm Toasts</h2>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Top Right</p>
+          <span class="button danger" onclick="toggleConfirm('toast in the top right corner','tr',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Top Left</p>
+          <span class="button danger" onclick="toggleConfirm('toast in the top left corner','tl',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Bottom Right</p>
+          <span class="button danger" onclick="toggleConfirm('toast in the bottom right corner','br',3)">Show Toast</span>
+        </div>
+        <div class="col-3">
+          <p>Show Toast: Top Left</p>
+          <span class="button danger" onclick="toggleConfirm('toast in the bottom left corner','bl',3)">Show Toast</span>
+        </div>
+      </div>
+    </div>
+  </main>
   <script src="dist/js/notifica.min.js"></script>
   <script>
     function toggleToastInput() {
@@ -53,16 +121,16 @@
       }
     }
 
-    function toggleToast(msg, pos, ti) {
+    function showToast(msg, pos, ti) {
       _N.toast(msg, pos, ti);
     }
 
-    function toggleDismiss() {
-      _N.dismiss('some warning message', 'bl', 3);
+    function toggleDismiss(msg, pos, ti) {
+      _N.dismiss(msg, pos, ti);
     }
 
-    function toggleConfirm() {
-      _N.confirm('some warning message', 'bl', 3);
+    function toggleConfirm(msg, pos, ti) {
+      _N.confirm(msg, pos, ti);
     }
   </script>
 </body>
